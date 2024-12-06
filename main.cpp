@@ -4,7 +4,6 @@
 #define SCB_PIN 10 // on "Lolin" I2C connector
 
 
-bool display = true;
 Matrix8x8TaskHandler matrix8x8;
 WifiServices wifiServices;
 
@@ -15,6 +14,7 @@ void setup()
   log_d("Starting setup...");
 
   pinMode(SCB_PIN, OUTPUT);
+  digitalWrite(SCB_PIN, true);
 
   wifiServices.setup(DEVICE_NAME);
   
