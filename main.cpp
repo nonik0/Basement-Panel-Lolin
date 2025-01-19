@@ -1,8 +1,9 @@
 #include "matrix_8x8.h"
 #include "wifi_services.h"
 
-#define SCB_PIN 10 // on "Lolin" I2C connector
-
+// on "Lolin" I2C connector
+#define EXT_DISPLAY_PIN1 8
+#define EXT_DISPLAY_PIN2 10
 
 Matrix8x8TaskHandler matrix8x8;
 WifiServices wifiServices;
@@ -13,18 +14,20 @@ void setup()
   delay(5000);
   log_d("Starting setup...");
 
-  pinMode(SCB_PIN, OUTPUT);
-  digitalWrite(SCB_PIN, true);
+  pinMode(EXT_DISPLAY_PIN1, OUTPUT);
+  pinMode(EXT_DISPLAY_PIN2, OUTPUT);
+  digitalWrite(EXT_DISPLAY_PIN1, true);
+  digitalWrite(EXT_DISPLAY_PIN2, true);
 
   wifiServices.setup(DEVICE_NAME);
-  
+
   matrix8x8.createTask();
   wifiServices.createTask();
 
   wifiServices.registerSetDisplayCallback([&](bool state)
-                                          { matrix8x8.setDisplay(state); });
-  wifiServices.registerSetDisplayCallback([&](bool state)
-                                          { digitalWrite(SCB_PIN, state); });
+                                          { matrix8x8.setDisplay(state);
+                                            digitalWrite(EXT_DISPLAY_PIN1, state);
+                                            digitalWrite(EXT_DISPLAY_PIN2, state); });
 
   log_d("Setup complete");
 }
