@@ -15,16 +15,15 @@ private:
     static const int HEIGHT = 8;
     static const int LED_COUNT = WIDTH * HEIGHT;
     static const int LED_PIN = 6;
-    static const int BRIGHTNESS = 1;
-    const uint32_t Yellow = Adafruit_NeoPixel::Color(6 * BRIGHTNESS, 6 * BRIGHTNESS, 0);
-    const uint32_t Amber = Adafruit_NeoPixel::Color(6 * BRIGHTNESS, 2 * BRIGHTNESS, 0);
-    const uint32_t Orange = Adafruit_NeoPixel::Color(6 * BRIGHTNESS, 1 * BRIGHTNESS, 0);
-    const uint32_t OrangeDark = Adafruit_NeoPixel::Color(5 * BRIGHTNESS, 1 * BRIGHTNESS, 0);
-    const uint32_t OrangeDarker = Adafruit_NeoPixel::Color(4 * BRIGHTNESS, 1 * BRIGHTNESS, 0);
-    const uint32_t OrangeDarkest = Adafruit_NeoPixel::Color(3 * BRIGHTNESS, 1 * BRIGHTNESS, 0);
-    const uint32_t Black = Adafruit_NeoPixel::Color(0, 0, 0);
-    const uint32_t Colors[6] = {Yellow, Amber, Orange, OrangeDark, OrangeDarker, OrangeDarkest};
-    const uint32_t NumColors = 6;
+    static const int BRIGHTNESS = 3;
+    const uint32_t Yellow = Adafruit_NeoPixel::Color(0xFF, 0xAF, 0x00);
+    const uint32_t Amber = Adafruit_NeoPixel::Color(0xFF, 0x8F, 0x00);
+    const uint32_t Orange = Adafruit_NeoPixel::Color(0xFF, 0x6F, 0x00);
+    const uint32_t OrangeDark = Adafruit_NeoPixel::Color(0xFF, 0x5F, 0x00);
+    const uint32_t RedOrange = Adafruit_NeoPixel::Color(0xFF, 0x2F, 0x00);
+    const uint32_t Black = Adafruit_NeoPixel::Color(0x00, 0x00, 0x00);
+    const uint32_t Colors[5] = {Yellow, Amber, Orange, OrangeDark, RedOrange};
+    const uint32_t NumColors = sizeof(Colors) / sizeof(Colors[0]);
 
     struct Pixel
     {
@@ -53,6 +52,7 @@ bool Matrix8x8TaskHandler::createTask()
 
     log_d("Initializing matrix");
     _pixels.begin();
+    _pixels.setBrightness(BRIGHTNESS);
 
     for (int i = 0; i < LED_COUNT; i++)
     {
